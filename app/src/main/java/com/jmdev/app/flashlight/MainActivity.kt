@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jmdev.app.flashlight.ui.theme.FlashlightTheme
@@ -35,9 +36,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-@Preview(device = "id:pixel_6_pro", showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
-)
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
@@ -48,13 +46,14 @@ fun MainScreen() {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surface
+        color = MaterialTheme.colorScheme.background
     ) {
         Text(
             text = "Linterna " + lightMsg.value,
             Modifier.padding(32.dp, top = 60.dp),
             fontSize = 30.sp,
-            fontWeight = FontWeight.Light
+            fontWeight = FontWeight.Light,
+            color = MaterialTheme.colorScheme.primary
         )
         Box(contentAlignment = Alignment.Center) {
             Switch(
