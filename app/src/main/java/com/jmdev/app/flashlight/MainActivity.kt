@@ -1,7 +1,6 @@
 package com.jmdev.app.flashlight
 
 import android.content.Context
-import android.content.res.Configuration
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,9 +18,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jmdev.app.flashlight.ui.theme.FlashlightTheme
@@ -36,11 +35,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Preview
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
     val lightStatus = rememberSaveable { mutableStateOf(false) }
-    val lightMsg = rememberSaveable { mutableStateOf("Apagada") }
     lateinit var cameraManager: CameraManager
     lateinit var cameraID: String
 
@@ -49,7 +49,7 @@ fun MainScreen() {
         color = MaterialTheme.colorScheme.background
     ) {
         Text(
-            text = "Linterna " + lightMsg.value,
+            text = stringResource(R.string.app_name),
             Modifier.padding(32.dp, top = 60.dp),
             fontSize = 30.sp,
             fontWeight = FontWeight.Light,
@@ -60,7 +60,8 @@ fun MainScreen() {
                 checked = lightStatus.value,
                 onCheckedChange = {
                     lightStatus.value = it
-                    cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+                    cameraManager =
+                        context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
                     try {
                         cameraID = cameraManager.cameraIdList[0]
                     } catch (e: Exception) {
@@ -68,10 +69,8 @@ fun MainScreen() {
                     }
                     if (lightStatus.value) {
                         cameraManager.setTorchMode(cameraID, true)
-                        lightMsg.value = "Encendida"
                     } else {
                         cameraManager.setTorchMode(cameraID, false)
-                        lightMsg.value = "Apagada"
                     }
                 }
             )
