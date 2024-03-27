@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Linterna</string>
+    <string name="state">Estado de la linterna</string>
 </resources>
